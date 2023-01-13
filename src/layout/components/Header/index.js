@@ -9,7 +9,9 @@ function Header() {
         display: "flex",
         alignItems: "center",
         width: "100%",
-        backgroundColor: assets.colors.secondary,
+        // backgroundColor: assets.colors.secondary,
+        // backgroundColor: "#e9f3ff",
+        background: "linear-gradient(180deg, rgba(217, 217, 217, 0) 0%, rgba(21, 185, 187, 0.3) 94.77%)",
         padding: "8px 20px",
       }}
     >
@@ -38,9 +40,9 @@ function Header() {
         flex={1}
         variant={"subtitle1"}
         textAlign={"center"}
-        sx={{ fontSize: "48px", lineHeight: "77.52px", fontWeight: "700", color: assets.colors.primary }}
+        sx={{ fontSize: "26px", lineHeight: "41.99px", fontWeight: "700", color: assets.colors.primary }}
       >
-        HAPPY NEW YEAR
+        CÔNG TY DIGITECH SOLUTIONS
       </Typography>
     </Box>
   );

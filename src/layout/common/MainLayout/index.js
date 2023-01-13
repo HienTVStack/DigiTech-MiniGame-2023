@@ -10,7 +10,7 @@ function MainLayout() {
         height: "100vh",
       }}
     >
-      <Header />
+      {/* <Header /> */}
 
       <Outlet />
     </Box>

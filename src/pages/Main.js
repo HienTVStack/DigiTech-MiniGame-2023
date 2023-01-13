@@ -37,7 +37,6 @@ function Main() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   // Check login
   // useEffect(() => {
   //   const handleCheckLogin = async () => {
@@ -67,18 +66,20 @@ function Main() {
       const timerId = setInterval(() => {
         setLuckyNumber(handleRandom(1000, 9999));
         count++;
-        if (count > 70) {
+        if (count > 90) {
           clearInterval(timerId);
           const numberResult = handleRandom(0, dataList.length);
           setLuckyNumber(dataList[numberResult]?.phone.slice(dataList[numberResult]?.phone.length - 4, dataList[numberResult].phone.length));
           setDataResultList([...dataResultList, dataList[numberResult]]);
           if (numberResult) {
             setDataList(dataList.filter((item) => item.phone !== dataList[numberResult]?.phone) || dataList);
-            setOpenModalResult(true);
+            setTimeout(() => {
+              setOpenModalResult(true);
+            }, 500);
           }
           setLoading(false);
         }
-      }, 70);
+      }, 80);
     } catch (error) {
       setLoading(false);
     }
@@ -99,37 +100,75 @@ function Main() {
           width: "100%",
           height: "100%",
           position: "relative",
+          marginTop: "40px",
         }}
       >
-        <Box
+        {/* Logo left */}
+        <Box sx={{ position: "absolute", left: 0, top: 0, marginLeft: "20px" }}>
+          <img
+            width={200}
+            height={120}
+            src={"https://res.cloudinary.com/digitech-global-solutions/image/upload/v1665502031/g5x4zklaro3mdn1p3hlr.png"}
+            alt={"logo"}
+          />
+        </Box>
+        <Box sx={{ position: "absolute", left: 0, top: 0, marginLeft: "20px" }}>
+          <img
+            width={200}
+            height={120}
+            src={"https://res.cloudinary.com/digitech-global-solutions/image/upload/v1665502031/g5x4zklaro3mdn1p3hlr.png"}
+            alt={"logo"}
+          />
+        </Box>
+
+        {/* Logo right */}
+        <Box sx={{ position: "absolute", right: 0, top: 0, marginLeft: "20px" }}>
+          <img width={200} height={120} src={assets.images.logo} alt={"logo"} />
+        </Box>
+
+        <Typography
+          variant="body2"
+          textAlign={"center"}
+          component="h2"
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            height: "76px",
-            backgroundColor: "#e9f3ff",
+            fontSize: "26px",
+            lineHeight: "41.99px",
+            fontWeight: "700",
+            color: assets.colors.primary,
           }}
         >
-          <Typography
-            variant="body2"
-            component="h2"
-            sx={{
-              fontSize: "48px",
-              lineHeight: "77.52px",
-              fontWeight: "700",
-              color: assets.colors.primary,
-            }}
-          >
-            CHƯƠNG TRÌNH QUAY SỐ TRÚNG THƯỞNG
-          </Typography>
-        </Box>
+          CÔNG TY DIGITECH SOLUTIONS
+        </Typography>
+        <Typography
+          variant="body2"
+          textAlign={"center"}
+          component="h2"
+          sx={{
+            fontSize: "26px",
+            lineHeight: "41.99px",
+            fontWeight: "700",
+            color: assets.colors.primary,
+          }}
+        >
+          CHÚC MỪNG NĂM MỚI
+        </Typography>
+        <Typography
+          variant="body2"
+          textAlign={"center"}
+          component="h2"
+          sx={{
+            fontSize: "26px",
+            lineHeight: "41.99px",
+            fontWeight: "700",
+            color: assets.colors.primary,
+          }}
+        >
+          AN KHANG - THỊNH VƯỢNG
+        </Typography>
         <Box
           sx={{
-            position: "relative",
             width: "100%",
-            height: "calc(100% - 168px)",
+            height: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -147,41 +186,46 @@ function Main() {
             left={"50%"}
             sx={{ transform: "translate(-50%, -50%)" }}
           >
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              width={"682px"}
-              height={"100px"}
-              p={2}
+            <Typography
+              variant="body2"
+              textAlign={"center"}
+              component="h2"
               sx={{
-                background: "radial-gradient(50% 1568% at 50% 50%, #FF16A8 0%, #FF76E7 95.83%)",
-                boxShadow: "4px 4px 10px rgba(98, 98, 98, 0.25)",
-                borderRadius: "20px",
+                fontSize: "26px",
+                lineHeight: "41.99px",
+                fontWeight: "700",
+                color: assets.colors.primary,
               }}
             >
-              <Typography variant="body2" fontSize={"80px"} color={assets.colors.white} m={2} letterSpacing={"25px"}>
-                {luckyNumber}
-              </Typography>
-            </Box>
+              CHƯƠNG TRÌNH QUAY SỐ MAY MẮN
+            </Typography>
+            <div id="main-number" style={{ margin: "40px 0" }}>
+              <input disabled type="text" value={luckyNumber.toString().slice(0, 1)} required id="n1" name="n1" />
+              <input disabled type="text" value={luckyNumber.toString().slice(1, 2)} required id="n2" name="n2" />
+              <input disabled type="text" value={luckyNumber.toString().slice(2, 3)} required id="n3" name="n3" />
+              <input disabled type="text" value={luckyNumber.toString().slice(3, 4)} required id="n4" name="n4" />
+              {/* <input type="text" value="0" required id="n5" name="n5" />
+              <input type="text" value="0" required id="n6" name="n6" /> */}
+            </div>
+
             <LoadingButton
               variant="outlined"
-              size="large"
+              // size="large"
               loading={loading}
               onClick={handleRandomNumber}
               sx={{
                 display: "flex",
                 alignItems: "center",
-                padding: "12px 34px",
-                marginTop: "30px",
+                padding: "8px 34px",
+                margin: "40px 0",
                 border: `3px solid ${assets.colors.white}`,
-                borderRadius: "50px",
+                borderRadius: "20px",
                 // background: "linear-gradient(90deg, #D9D9D9 0%, #4D81E7 0.01%, #6F48F2 100%);",
                 background: assets.colors.secondary,
                 color: assets.colors.white,
-                fontSize: "27px",
+                fontSize: "20px",
                 fontWeight: "700",
-                lineHeight: "43.605px",
+                lineHeight: "32.3px",
                 "&:hover": {
                   border: `3px solid ${assets.colors.white}`,
                   opacity: "0.9",

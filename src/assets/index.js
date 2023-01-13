@@ -1,6 +1,6 @@
 const assets = {
   images: {
-    logo: require("./images/logo-TNO.png"),
+    logo: require("./images/meo-logo.png"),
     backgroundMain: require("./images/background minigames.png"),
   },
   colors: {
