@@ -200,10 +200,10 @@ function Main() {
               CHƯƠNG TRÌNH QUAY SỐ MAY MẮN
             </Typography>
             <div id="main-number" style={{ margin: "40px 0" }}>
-              <input disabled type="text" value={luckyNumber.toString().slice(0, 1)} required id="n1" name="n1" />
-              <input disabled type="text" value={luckyNumber.toString().slice(1, 2)} required id="n2" name="n2" />
-              <input disabled type="text" value={luckyNumber.toString().slice(2, 3)} required id="n3" name="n3" />
-              <input disabled type="text" value={luckyNumber.toString().slice(3, 4)} required id="n4" name="n4" />
+              <input disabled type="text" value={luckyNumber && luckyNumber.toString().slice(0, 1)} required id="n1" name="n1" />
+              <input disabled type="text" value={luckyNumber && luckyNumber.toString().slice(1, 2)} required id="n2" name="n2" />
+              <input disabled type="text" value={luckyNumber && luckyNumber.toString().slice(2, 3)} required id="n3" name="n3" />
+              <input disabled type="text" value={luckyNumber && luckyNumber.toString().slice(3, 4)} required id="n4" name="n4" />
               {/* <input type="text" value="0" required id="n5" name="n5" />
               <input type="text" value="0" required id="n6" name="n6" /> */}
             </div>
