@@ -1,4 +1,4 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Modal, Typography, useMediaQuery, useTheme } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useEffect, useState } from "react";
 import assets from "../assets";
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const style = {
-  minWidth: "500px",
+  // minWidth: "500px",
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -22,10 +22,12 @@ const style = {
 function Main() {
   const navigate = useNavigate();
   const dataMS = useSelector((state) => state.data.dataList);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [dataList, setDataList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [luckyNumber, setLuckyNumber] = useState("0000");
-  const [openModalResult, setOpenModalResult] = useState(false);
+  // const [openModalResult, setOpenModalResult] = useState(false);
   const [dataResultList, setDataResultList] = useState([]);
 
   useEffect(() => {
@@ -37,18 +39,6 @@ function Main() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // Check login
-  // useEffect(() => {
-  //   const handleCheckLogin = async () => {
-  //     const res = await localStorage.getItem("isLogin");
-
-  //     if (!res) {
-  //       navigate("/login");
-  //     }
-  //   };
-  //   handleCheckLogin();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   const handleRandom = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -59,9 +49,32 @@ function Main() {
       alert("Chưa có dữ liệu");
       return;
     }
-    setLoading(true);
+    // setLoading(true);
 
+    // try {
+    //   let count = 0;
+    //   const timerId = setInterval(() => {
+    //     setLuckyNumber(handleRandom(1000, 9999));
+    //     count++;
+    //     if (count > 90) {
+    //       clearInterval(timerId);
+    //       const numberResult = handleRandom(0, dataList.length);
+    //       setLuckyNumber(dataList[numberResult]?.phone.slice(dataList[numberResult]?.phone.length - 4, dataList[numberResult].phone.length));
+    //       setDataResultList([...dataResultList, dataList[numberResult]]);
+    //       if (numberResult) {
+    //         setDataList(dataList.filter((item) => item.phone !== dataList[numberResult]?.phone) || dataList);
+    //         setTimeout(() => {
+    //           setOpenModalResult(true);
+    //         }, 500);
+    //       }
+    //       setLoading(false);
+    //     }
+    //   }, 80);
+    // } catch (error) {
+    //   setLoading(false);
+    // }
     try {
+      setLoading(true);
       let count = 0;
       const timerId = setInterval(() => {
         setLuckyNumber(handleRandom(1000, 9999));
@@ -69,32 +82,29 @@ function Main() {
         if (count > 90) {
           clearInterval(timerId);
           const numberResult = handleRandom(0, dataList.length);
-          setLuckyNumber(dataList[numberResult]?.phone.slice(dataList[numberResult]?.phone.length - 4, dataList[numberResult].phone.length));
+          if (!dataList[numberResult]) return;
+          setLuckyNumber(dataList[numberResult].phone.slice(dataList[numberResult].phone.length - 4), dataList[numberResult].phone.length);
           setDataResultList([...dataResultList, dataList[numberResult]]);
-          if (numberResult) {
-            setDataList(dataList.filter((item) => item.phone !== dataList[numberResult]?.phone) || dataList);
-            setTimeout(() => {
-              setOpenModalResult(true);
-            }, 500);
-          }
           setLoading(false);
         }
-      }, 80);
+      }, [100]);
     } catch (error) {
+      console.error(error);
       setLoading(false);
     }
+    // setLoading(false);
   };
 
-  const handleCloseModalResult = () => {
-    setOpenModalResult(false);
-  };
+  // const handleCloseModalResult = () => {
+  //   setOpenModalResult(false);
+  // };
 
   return (
     <>
-      <div className="pyro" style={{ zIndex: 1 }}>
+      {/* <div className="pyro" style={{ zIndex: 1 }}>
         <div className="before"></div>
         <div className="after"></div>
-      </div>
+      </div> */}
       <Box
         sx={{
           width: "100%",
@@ -106,40 +116,34 @@ function Main() {
         {/* Logo left */}
         <Box sx={{ position: "absolute", left: 0, top: 0, marginLeft: "20px" }}>
           <img
-            width={200}
-            height={120}
-            src={"https://res.cloudinary.com/digitech-global-solutions/image/upload/v1665502031/g5x4zklaro3mdn1p3hlr.png"}
-            alt={"logo"}
-          />
-        </Box>
-        <Box sx={{ position: "absolute", left: 0, top: 0, marginLeft: "20px" }}>
-          <img
-            width={200}
-            height={120}
+            width={105}
+            height={60}
             src={"https://res.cloudinary.com/digitech-global-solutions/image/upload/v1665502031/g5x4zklaro3mdn1p3hlr.png"}
             alt={"logo"}
           />
         </Box>
 
         {/* Logo right */}
-        <Box sx={{ position: "absolute", right: 0, top: 0, marginLeft: "20px" }}>
+        {/* <Box sx={{ position: "absolute", right: 0, top: 0, marginLeft: "20px" }}>
           <img width={200} height={120} src={assets.images.logo} alt={"logo"} />
-        </Box>
+        </Box> */}
+        {!matches && (
+          <Typography
+            variant="body2"
+            textAlign={"center"}
+            component="h2"
+            fontSize={25}
+            lineHeight={"40.375px"}
+            fontWeight={700}
+            sx={{
+              color: assets.colors.primary,
+            }}
+          >
+            CÔNG TY DIGITECH SOLUTIONS
+          </Typography>
+        )}
 
-        <Typography
-          variant="body2"
-          textAlign={"center"}
-          component="h2"
-          sx={{
-            fontSize: "26px",
-            lineHeight: "41.99px",
-            fontWeight: "700",
-            color: assets.colors.primary,
-          }}
-        >
-          CÔNG TY DIGITECH SOLUTIONS
-        </Typography>
-        <Typography
+        {/* <Typography
           variant="body2"
           textAlign={"center"}
           component="h2"
@@ -151,8 +155,8 @@ function Main() {
           }}
         >
           CHÚC MỪNG NĂM MỚI
-        </Typography>
-        <Typography
+        </Typography> */}
+        {/* <Typography
           variant="body2"
           textAlign={"center"}
           component="h2"
@@ -164,7 +168,7 @@ function Main() {
           }}
         >
           AN KHANG - THỊNH VƯỢNG
-        </Typography>
+        </Typography> */}
         <Box
           sx={{
             width: "100%",
@@ -184,14 +188,15 @@ function Main() {
             alignItems={"center"}
             top={"50%"}
             left={"50%"}
+            width={"100%"}
             sx={{ transform: "translate(-50%, -50%)" }}
           >
             <Typography
-              variant="body2"
+              variant="subtitle1"
               textAlign={"center"}
               component="h2"
               sx={{
-                fontSize: "26px",
+                fontSize: matches ? "20px" : "26px",
                 lineHeight: "41.99px",
                 fontWeight: "700",
                 color: assets.colors.primary,
@@ -229,6 +234,7 @@ function Main() {
                 "&:hover": {
                   border: `3px solid ${assets.colors.white}`,
                   opacity: "0.9",
+                  backgroundColor: assets.colors.primary,
                 },
               }}
             >
@@ -236,54 +242,49 @@ function Main() {
             </LoadingButton>
           </Box>
         </Box>
-        <Box
-          sx={{
-            position: "absolute",
-            marginBottom: "150px",
-            marginRight: "50px",
-            bottom: "0",
-            right: 0,
-            padding: "12px",
-            border: "1px solid red",
-            borderRadius: "12px",
-            minHeight: "200px",
-            minWidth: "320px",
-          }}
-        >
-          <Typography variant={"subtitle1"} textAlign={"center"} color={assets.colors.secondary} gutterBottom>
-            THÔNG TIN TRÚNG THƯỞNG
-          </Typography>
-          <Typography variant={"body2"} gutterBottom>
-            Giải nhất: <span style={{ color: assets.colors.primary }}>{dataResultList[3]?.full_name || "loading..."}</span>
-          </Typography>
-          <Typography variant={"body2"} gutterBottom>
-            Giải nhì: <span style={{ color: assets.colors.primary }}>{dataResultList[2]?.full_name || "loading..."}</span>
-          </Typography>
-          <Typography variant={"body2"} gutterBottom>
-            Giải khuyến kích 1: <span style={{ color: assets.colors.primary }}>{dataResultList[0]?.full_name || "loading..."}</span>
-          </Typography>
-          <Typography variant={"body2"} gutterBottom>
-            Giải khuyến kích 2: <span style={{ color: assets.colors.primary }}>{dataResultList[1]?.full_name || "loading..."}</span>
-          </Typography>
-        </Box>
+        {!matches && (
+          <Box
+            sx={{
+              position: "absolute",
+              marginBottom: "150px",
+              marginRight: "50px",
+              bottom: "0",
+              right: 0,
+              padding: "12px",
+              border: "1px solid red",
+              borderRadius: "12px",
+              minHeight: "200px",
+              minWidth: "320px",
+            }}
+          >
+            <Typography variant={"subtitle1"} textAlign={"center"} color={assets.colors.secondary} gutterBottom>
+              THÔNG TIN TRÚNG THƯỞNG
+            </Typography>
+            <Typography variant={"body2"} gutterBottom>
+              Giải nhất: <span style={{ color: assets.colors.primary }}>{dataResultList[3]?.full_name || "loading..."}</span>
+            </Typography>
+            <Typography variant={"body2"} gutterBottom>
+              Giải nhì: <span style={{ color: assets.colors.primary }}>{dataResultList[2]?.full_name || "loading..."}</span>
+            </Typography>
+            <Typography variant={"body2"} gutterBottom>
+              Giải khuyến kích 1: <span style={{ color: assets.colors.primary }}>{dataResultList[0]?.full_name || "loading..."}</span>
+            </Typography>
+            <Typography variant={"body2"} gutterBottom>
+              Giải khuyến kích 2: <span style={{ color: assets.colors.primary }}>{dataResultList[1]?.full_name || "loading..."}</span>
+            </Typography>
+          </Box>
+        )}
       </Box>
-      <Modal
-        open={openModalResult}
-        disableEnforceFocus
-        disableAutoFocus
-        onClose={handleCloseModalResult}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2" fontSize={"23px"} fontWeight={"700"} color={"primary"}>
+      {/* <Modal open={openModalResult} disableEnforceFocus disableAutoFocus onClose={handleCloseModalResult}>
+        <Box sx={style} style={{ maxWidth: "80%" }}>
+          <Typography id="modal-modal-title" variant="h6" component="h2" fontSize={matches ? "14px" : "23px"} fontWeight={"700"} color={"primary"}>
             Xin chúc mừng chủ nhân của giải thưởng có số điện thoại đuôi
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }} fontSize={"30px"} color={"red"} textAlign={"center"}>
             {luckyNumber}
           </Typography>
         </Box>
-      </Modal>
+      </Modal> */}
     </>
   );
 }
