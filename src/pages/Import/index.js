@@ -198,7 +198,7 @@ function Import() {
         </Grid>
         {!matches && (
           <Grid item xs={12} sm={12} md={6} lg={4}>
-          <Typography variant="subtitle1" fontSize={24}>Quét mã để tham gia</Typography>
+          <Typography variant="subtitle1" fontSize={24} textAlign={"center"}>Quét mã để tham gia</Typography>
           <img src="/qr-code.png" alt="" width={'100%'} height={"400px"} style={{objectFit: 'contain'}} />
         </Grid>
         )}
