@@ -95,6 +95,10 @@ function Import() {
       setDataListXLSX([]);
       return;
     }
+    if (dataListXLSX.length < 4) {
+      setShowToast({ open: true, message: "Số lượng người chơi phải lớn 4", severity: "warning" });
+      return;
+    }
 
     if (!dataListXLSX[0].full_name || !dataListXLSX[0].phone) {
       setShowToast({

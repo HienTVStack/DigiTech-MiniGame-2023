@@ -49,6 +49,7 @@ function Main() {
       alert("Chưa có dữ liệu");
       return;
     }
+
     // setLoading(true);
 
     // try {
@@ -82,8 +83,12 @@ function Main() {
         if (count > 90) {
           clearInterval(timerId);
           const numberResult = handleRandom(0, dataList.length);
-          if (!dataList[numberResult]) return;
+          if (!dataList[numberResult]) {
+            setLoading(false);
+            return;
+          }
           setLuckyNumber(dataList[numberResult].phone.slice(dataList[numberResult].phone.length - 4), dataList[numberResult].phone.length);
+          setDataList(dataList.filter((item) => item.phone !== dataList[numberResult].phone));
           setDataResultList([...dataResultList, dataList[numberResult]]);
           setLoading(false);
         }
