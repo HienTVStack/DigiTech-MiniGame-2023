@@ -112,12 +112,12 @@ function Import() {
     }
     dispatch(setDataList(dataListXLSX));
     navigate("/");
-    console.log("🚀 ~ file: index.js:112 ~ handleImport ~ dataListXLSX", dataListXLSX);
   };
   const fetch = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("https://sheet.best/api/sheets/fc4c0716-e521-4084-bbd6-65896af2a63c");
+      const res = await axios.get("https://sheet.best/api/sheets/8ebdd946-31ac-4e20-a710-d56c25b07de5");
+      // const res = await axios.get("https://sheet.best/api/sheets/fc4c0716-e521-4084-bbd6-65896af2a63c");
       if (res.status === 200) {
         setDataListXLSX(res.data);
       }

@@ -191,7 +191,7 @@ function Main() {
             display={"flex"}
             flexDirection={"column"}
             alignItems={"center"}
-            top={"50%"}
+            top={"45%"}
             left={"50%"}
             width={"100%"}
             sx={{ transform: "translate(-50%, -50%)" }}
