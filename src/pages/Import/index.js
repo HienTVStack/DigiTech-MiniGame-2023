@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Button, Container, Icon, Snackbar, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, Container, Grid, Icon, Snackbar, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,8 @@ const columns = [
 function Import() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('sm'));
   // const inputRef = useRef();
   // const [importFileName, setImportFileName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -188,10 +190,21 @@ function Import() {
           Nạp dữ liệu
         </Button>
       </Box>
-
-      <Box sx={{ margin: "20px 0", display: "flex", height: "400px" }}>
-        <DataGrid loading={loading} rows={dataListXLSX} columns={columns} getRowId={(row) => row.full_name + row.phone} />
-      </Box>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={12} md={6} lg={8}>
+          <Box sx={{ margin: "20px 0", display: "flex", height: "500px" }}>
+            <DataGrid loading={loading} rows={dataListXLSX} columns={columns} getRowId={(row) => row.full_name + row.phone} />
+          </Box>
+        </Grid>
+        {!matches && (
+          <Grid item xs={12} sm={12} md={6} lg={4}>
+          <Typography variant="subtitle1" fontSize={24}>Quét mã để tham gia</Typography>
+          <img src="/qr-code.png" alt="" width={'100%'} height={"400px"} style={{objectFit: 'contain'}} />
+        </Grid>
+        )}
+        
+      </Grid>
+      
 
       {/* Toast message */}
       <Snackbar
