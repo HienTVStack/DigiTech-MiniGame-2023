@@ -142,9 +142,9 @@ function Import() {
         <Typography textAlign={"center"} fontSize={"20px"} lineHeight={"32.8px"} color={assets.colors.primary}>
           TẢI LÊN DANH SÁCH THAM GIA CHƯƠNG TRÌNH
         </Typography>
-        <a href="./Digitech-DigiEdu-Employee-template.xlsx" download style={{ textAlign: "center", display: "block" }}>
+        {/* <a href="./Digitech-DigiEdu-Employee-template.xlsx" download style={{ textAlign: "center", display: "block" }}>
           <i>Tải xuống bản mẫu</i>
-        </a>
+        </a> */}
       </Box>
 
       <Box sx={{ margin: "20px 0" }}>
