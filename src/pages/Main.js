@@ -83,10 +83,11 @@ function Main() {
         if (count > 90) {
           clearInterval(timerId);
           const numberResult = handleRandom(0, dataList.length);
-          if (!dataList[numberResult]) {
-            setLoading(false);
-            return;
-          }
+          // if (!dataList[numberResult]) {
+          //   setLoading(false);
+          //   return;
+          // }
+          console.log(dataList[numberResult]);
           setLuckyNumber(dataList[numberResult].phone.slice(dataList[numberResult].phone.length - 4), dataList[numberResult].phone.length);
           setDataList(dataList.filter((item) => item.phone !== dataList[numberResult].phone));
           setDataResultList([...dataResultList, dataList[numberResult]]);

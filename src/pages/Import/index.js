@@ -2,9 +2,9 @@ import { Alert, AlertTitle, Box, Button, Container, Grid, Icon, Snackbar, Stack,
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { read, utils } from "xlsx";
+import { read, utils } from "xlsx";
 import { setDataList } from "../../redux/actions";
-// import PublishIcon from "@mui/icons-material/Publish";
+import PublishIcon from "@mui/icons-material/Publish";
 import { DataGrid } from "@mui/x-data-grid";
 import assets from "../../assets";
 import axios from "axios";
@@ -18,9 +18,9 @@ function Import() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
   // const inputRef = useRef();
-  // const [importFileName, setImportFileName] = useState("");
+  const [importFileName, setImportFileName] = useState("");
   const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState({
     open: false,
@@ -46,45 +46,46 @@ function Import() {
     setShowToast({ open: false });
   };
 
-  // const readExcel = async (file) => {
-  //   setImportFileName(file?.name);
-  //   const promise = new Promise((resolve, reject) => {
-  //     const fileReader = new FileReader();
-  //     fileReader.readAsArrayBuffer(file);
+  const readExcel = async (file) => {
+    setImportFileName(file?.name);
+    const promise = new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsArrayBuffer(file);
 
-  //     fileReader.onload = (e) => {
-  //       const bufferArray = e.target.result;
+      fileReader.onload = (e) => {
+        const bufferArray = e.target.result;
 
-  //       const wb = read(bufferArray, { type: "buffer" });
+        const wb = read(bufferArray, { type: "buffer" });
 
-  //       const wsname = wb.SheetNames[0];
+        const wsname = wb.SheetNames[0];
 
-  //       const ws = wb.Sheets[wsname];
+        const ws = wb.Sheets[wsname];
 
-  //       const data = utils.sheet_to_json(ws);
-  //       resolve(data);
-  //     };
-  //     fileReader.onerror = (err) => {
-  //       reject(err);
-  //     };
-  //   });
+        const data = utils.sheet_to_json(ws);
+        resolve(data);
+      };
+      fileReader.onerror = (err) => {
+        reject(err);
+      };
+    });
 
-  //   await promise
-  //     .then((data) => {
-  //       if (data) {
-  //         setDataListXLSX(data.slice(1));
-  //         setShowToast({
-  //           open: true,
-  //           title: "Thành công",
-  //           message: "Tải thành công dữ liệu",
-  //           severity: "success",
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+    await promise
+      .then((data) => {
+        if (data) {
+          setDataListXLSX(data.slice(1));
+          setDataListXLSX(data);
+          setShowToast({
+            open: true,
+            title: "Thành công",
+            message: "Tải thành công dữ liệu",
+            severity: "success",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleImport = () => {
     if (dataListXLSX.length <= 0) {
@@ -115,11 +116,12 @@ function Import() {
     dispatch(setDataList(dataListXLSX));
     navigate("/");
   };
+
   const fetch = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("https://sheet.best/api/sheets/8ebdd946-31ac-4e20-a710-d56c25b07de5");
-      // const res = await axios.get("https://sheet.best/api/sheets/fc4c0716-e521-4084-bbd6-65896af2a63c");
+      // const res = await axios.get("https:  /sheet.best/api/sheets/8ebdd946-31ac-4e20-a710-d56c25b07de5");
+      const res = await axios.get("https://sheet.best/api/sheets/ce9748d6-24b0-43bd-a28c-671daa71bcc5");
       if (res.status === 200) {
         setDataListXLSX(res.data);
       }
@@ -130,9 +132,9 @@ function Import() {
     }
   };
 
-  useEffect(() => {
-    fetch();
-  }, []);
+  // useEffect(() => {
+  //   fetch();
+  // }, []);
 
   return (
     <Container>
@@ -140,18 +142,18 @@ function Import() {
         <Typography textAlign={"center"} fontSize={"20px"} lineHeight={"32.8px"} color={assets.colors.primary}>
           TẢI LÊN DANH SÁCH THAM GIA CHƯƠNG TRÌNH
         </Typography>
-        {/* <a href="./Digitech-DigiEdu-Employee-template.xlsx" download style={{ textAlign: "center", display: "block" }}>
+        <a href="./Digitech-DigiEdu-Employee-template.xlsx" download style={{ textAlign: "center", display: "block" }}>
           <i>Tải xuống bản mẫu</i>
-        </a> */}
+        </a>
       </Box>
 
       <Box sx={{ margin: "20px 0" }}>
-        {/* <Box aria-label="upload picture" component="label" sx={{ cursor: "pointer" }}>
+        <Box aria-label="upload picture" component="label" sx={{ cursor: "pointer" }}>
           <input
             hidden
             accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
             type="file"
-            ref={inputRef}
+            // ref={inputRef}
             multiple
             onChange={(e) => {
               const file = e.target.files[0];
@@ -159,7 +161,8 @@ function Import() {
               e.target.value = "";
             }}
           />
-          <Stack direction={"row"} alignItems={"center"}>
+         
+            <Stack direction={"row"} alignItems={"center"}>
             <Box
               display="flex"
               alignItems="center"
@@ -184,14 +187,28 @@ function Import() {
             </Box>
             <Typography variant="body2">{importFileName}</Typography>
           </Stack>
-        </Box> */}
-
-        <Button size="large" variant="contained" onClick={handleImport}>
-          Nạp dữ liệu
-        </Button>
+          
+        </Box>
+            {!matches && (
+              <Button size="large" variant="contained" onClick={handleImport}>
+              Nạp dữ liệu
+              </Button>
+            )}
+       
       </Box>
       <Grid container spacing={3}>
+        {matches && (
+          <Grid item xs={12} sm={12} md={6} lg={4}>
+          <Typography variant="subtitle1" fontSize={24} textAlign={"center"}>Quét mã để tham gia</Typography>
+          <img src="/qr-code.png" alt="" width={'100%'} height={"400px"} style={{objectFit: 'contain'}} />
+        </Grid>
+        )}
         <Grid item xs={12} sm={12} md={6} lg={8}>
+          {matches && (
+             <Button size="large" variant="contained" onClick={handleImport}>
+             Nạp dữ liệu
+           </Button>
+          )}
           <Box sx={{ margin: "20px 0", display: "flex", height: "500px" }}>
             <DataGrid loading={loading} rows={dataListXLSX} columns={columns} getRowId={(row) => row.full_name + row.phone} />
           </Box>
@@ -202,9 +219,7 @@ function Import() {
           <img src="/qr-code.png" alt="" width={'100%'} height={"400px"} style={{objectFit: 'contain'}} />
         </Grid>
         )}
-        
       </Grid>
-      
 
       {/* Toast message */}
       <Snackbar
