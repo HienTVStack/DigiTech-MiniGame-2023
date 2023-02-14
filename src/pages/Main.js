@@ -91,6 +91,7 @@ function Main() {
           setDataList(dataList.filter((item) => item.phone !== dataList[numberResult].phone));
           setDataResultList([...dataResultList, dataList[numberResult]]);
           setLoading(false);
+          return;
         }
       }, [100]);
     } catch (error) {
@@ -266,17 +267,17 @@ function Main() {
               THÔNG TIN TRÚNG THƯỞNG
             </Typography>
             <Typography variant={"body2"} gutterBottom>
-              Giải nhất: <span style={{ color: assets.colors.primary }}>{dataResultList[3]?.full_name || "loading..."}</span>
+              Giải nhất: <span style={{ color: assets.colors.primary }}>{dataResultList[2]?.full_name || "loading..."}</span>
             </Typography>
             <Typography variant={"body2"} gutterBottom>
-              Giải nhì: <span style={{ color: assets.colors.primary }}>{dataResultList[2]?.full_name || "loading..."}</span>
+              Giải nhì: <span style={{ color: assets.colors.primary }}>{dataResultList[1]?.full_name || "loading..."}</span>
             </Typography>
             <Typography variant={"body2"} gutterBottom>
-              Giải khuyến kích 1: <span style={{ color: assets.colors.primary }}>{dataResultList[0]?.full_name || "loading..."}</span>
+              Giải ba: <span style={{ color: assets.colors.primary }}>{dataResultList[0]?.full_name || "loading..."}</span>
             </Typography>
-            <Typography variant={"body2"} gutterBottom>
+            {/* <Typography variant={"body2"} gutterBottom>
               Giải khuyến kích 2: <span style={{ color: assets.colors.primary }}>{dataResultList[1]?.full_name || "loading..."}</span>
-            </Typography>
+            </Typography> */}
           </Box>
         )}
       </Box>

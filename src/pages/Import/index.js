@@ -97,8 +97,8 @@ function Import() {
       setDataListXLSX([]);
       return;
     }
-    if (dataListXLSX.length < 4) {
-      setShowToast({ open: true, message: "Số lượng người chơi phải lớn 4", severity: "warning" });
+    if (dataListXLSX.length < 3) {
+      setShowToast({ open: true, message: "Số lượng người chơi phải lớn 3", severity: "warning" });
       return;
     }
 
